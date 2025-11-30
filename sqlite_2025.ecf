@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-18-0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-18-0 http://www.eiffel.com/developers/xml/configuration-1-18-0.xsd"
+        name="sqlite_2025"
+        uuid="E1F23456-2025-4ABC-DEAD-BEEF12345678"
+        library_target="sqlite_2025">
+	<description>
+		Modern SQLite wrapper for Eiffel (2025)
+		Includes FTS5, JSON1, RTREE, GEOPOLY, and other modern features
+	</description>
+
+	<target name="sqlite_2025">
+		<root all_classes="true"/>
+
+		<file_rule>
+			<exclude>/CVS$</exclude>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\.svn$</exclude>
+			<exclude>/\.git$</exclude>
+			<exclude>/spec$</exclude>
+			<exclude>/Clib$</exclude>
+		</file_rule>
+
+		<option warning="true" void_safety="all"/>
+
+		<!-- External C library -->
+		<external_include location="D:\prod\eiffel_sqlite_2025\Clib"/>
+		<external_object location="D:\prod\eiffel_sqlite_2025\Clib\sqlite3.obj">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_object>
+		<external_object location="D:\prod\eiffel_sqlite_2025\Clib\esqlite.obj">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_object>
+
+		<!-- Dependencies -->
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
+
+		<!-- Source clusters -->
+		<cluster name="sqlite" location=".\" recursive="false">
+			<file_rule>
+				<exclude>/binding$</exclude>
+				<exclude>/support$</exclude>
+				<exclude>/internals$</exclude>
+				<exclude>/Clib$</exclude>
+				<exclude>/spec$</exclude>
+			</file_rule>
+		</cluster>
+		<cluster name="internals" location=".\internals\" recursive="false"/>
+		<cluster name="binding" location=".\binding\" recursive="false"/>
+		<cluster name="support" location=".\support\" recursive="false"/>
+	</target>
+</system>

@@ -1,0 +1,39 @@
+# Compiled Object files
+*.obj
+*.o
+
+# Compiled Static libraries
+*.lib
+*.a
+
+# Build artifacts
+spec/*/
+EIFGENs/
+
+# Visual Studio temporary files
+*.suo
+*.user
+*.sln.docstates
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+
+# Build output directories
+/Clib/*.obj
+/spec/
+
+# Windows temporary files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# IDE files
+.vscode/
+.vs/
+*.code-workspace
