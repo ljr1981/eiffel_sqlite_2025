@@ -54,4 +54,14 @@
 			<option warning="none" is_obsolete_iteration="true"/>
 		</cluster>
 	</target>
+	<target name="sqlite_2025_test" extends="sqlite_2025">
+		<root class="ANY" feature="default_create"/>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
+		<library name="testing_ext" location="D:\prod\testing_ext\testing_ext.ecf"/>
+		<cluster name="tests" location=".\tests\" recursive="true"/>
+	</target>
 </system>

@@ -751,6 +751,7 @@ invariant
 	not_internal_db_is_null: internal_stmt /= default_pointer implies internal_db /= default_pointer
 	internal_db_is_null: internal_stmt = default_pointer implies internal_db = default_pointer
 	internal_thread_id_set: {PLATFORM}.is_thread_capable implies internal_thread_id /= 0
+	always_usable: database.is_interface_usable
 
 ;note
 	copyright: "Copyright (c) 1984-2018, Eiffel Software"

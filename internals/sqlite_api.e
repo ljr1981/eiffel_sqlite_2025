@@ -224,6 +224,7 @@ feature -- Status report: SQL
 
 invariant
 	initialization_count_not_negative: initialization_count.item >= 0
+	is_interface_usable
 
 ;note
 	copyright: "Copyright (c) 1984-2015, Eiffel Software"
