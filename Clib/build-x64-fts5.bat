@@ -1,10 +1,10 @@
 @echo off
-REM Quick build script for x64 SQLite with FTS5
-REM For use with Gobo Eiffel or when Makefile paths don't match your setup
+REM Quick build script for x64 SQLite with all modern features
+REM Includes: FTS5, JSON1, RTREE, GEOPOLY, Math Functions, Column Metadata
 
-echo ========================================
-echo Building SQLite 3.51.1 (x64 with FTS5)
-echo ========================================
+echo =====================================================
+echo Building SQLite 3.51.1 (x64 with all features)
+echo =====================================================
 echo.
 
 REM Check for Visual Studio
@@ -26,8 +26,8 @@ if not exist sqlite3.c (
     exit /b 1
 )
 
-echo Step 1: Compiling sqlite3.c with FTS5...
-cl /c /O2 /MT /DSQLITE_ENABLE_FTS5 /DSQLITE_THREADSAFE=1 sqlite3.c
+echo Step 1: Compiling sqlite3.c with all features...
+cl /c /O2 /MT /DSQLITE_ENABLE_FTS5 /DSQLITE_ENABLE_JSON1 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_GEOPOLY /DSQLITE_ENABLE_MATH_FUNCTIONS /DSQLITE_ENABLE_COLUMN_METADATA /DSQLITE_THREADSAFE=1 /DSQLITE_OMIT_LOAD_EXTENSION sqlite3.c
 if %ERRORLEVEL% neq 0 (
     echo ERROR: Failed to compile sqlite3.c
     pause
