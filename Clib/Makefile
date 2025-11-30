@@ -4,7 +4,17 @@
 CC = cl
 AR = lib
 CFLAGS = /nologo /MT /O2 /W3 /EHsc
-INCLUDES = /I. /I"C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include"
+
+# Auto-detect Eiffel runtime include path
+# Set ISE_EIFFEL environment variable if using EiffelStudio
+!IFDEF ISE_EIFFEL
+EIFFEL_INCLUDE = /I"$(ISE_EIFFEL)\studio\spec\win64\include"
+!ELSE
+# Default fallback path
+EIFFEL_INCLUDE = /I"C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include"
+!ENDIF
+
+INCLUDES = /I. $(EIFFEL_INCLUDE)
 
 # Modern SQLite compile flags
 SQLITE_FLAGS = /DSQLITE_THREADSAFE=1 \
@@ -16,7 +26,13 @@ SQLITE_FLAGS = /DSQLITE_THREADSAFE=1 \
                /DSQLITE_OMIT_LOAD_EXTENSION \
                /DSQLITE_ENABLE_COLUMN_METADATA
 
-OUTDIR = D:\prod\eiffel_sqlite_2025\spec\msvc\win64\lib
+# Auto-detect project root from EIFFEL_SQLITE_2025 or use relative path
+!IFDEF EIFFEL_SQLITE_2025
+OUTDIR = $(EIFFEL_SQLITE_2025)\spec\msvc\win64\lib
+!ELSE
+OUTDIR = ..\spec\msvc\win64\lib
+!ENDIF
+
 OBJECTS = sqlite3.obj esqlite.obj
 
 all: $(OUTDIR)\sqlite_2025.lib
