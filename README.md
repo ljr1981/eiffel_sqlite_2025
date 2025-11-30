@@ -13,6 +13,8 @@ Modern SQLite wrapper for Eiffel with FTS5, JSON1, and other modern features ena
 - **Column Metadata**: Enhanced introspection ✅
 - **x64 Native**: Compiled for 64-bit Windows with static runtime
 
+For detailed information about each compile flag and enabled feature, see [COMPILE_FLAGS.md](COMPILE_FLAGS.md).
+
 ## Build Instructions
 
 ### Windows (MSVC) - x64 with FTS5
@@ -114,14 +116,24 @@ eiffel_sqlite_2025/
 - ✅ All 181 tests passing in simple_sql integration
 - ✅ Fixed special character handling in FTS5 queries
 
+## Documentation
+
+- [README.md](README.md) - This file (build instructions and quick start)
+- [CHANGELOG.md](CHANGELOG.md) - Version history and changes
+- [COMPILE_FLAGS.md](COMPILE_FLAGS.md) - Detailed SQLite compile flag documentation
+- [LICENSE](LICENSE) - MIT License
+
 ## License
 
-MIT License
+MIT License - see [LICENSE](LICENSE) file for details.
+
+SQLite itself is in the Public Domain.
 
 ## Contributing
 
 When contributing:
-1. Do **not** commit `.obj` files or compiled libraries
-2. Update this README if changing build process or SQLite version
+1. Do **not** commit `.obj` files or compiled libraries (they're in `.gitignore`)
+2. Update README.md and CHANGELOG.md for significant changes
 3. Test with both EiffelStudio and Gobo Eiffel if possible
-4. Ensure all simple_sql tests pass after changes
+4. Run the full `simple_sql` test suite (181 tests should pass)
+5. Update COMPILE_FLAGS.md if modifying SQLite compilation flags

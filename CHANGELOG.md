@@ -8,9 +8,12 @@ All notable changes to this project will be documented in this file.
 - SQLite 3.51.1 amalgamation (updated from 3.31.1)
 - `EIF_NATURAL` type definition in `esqlite.h` for Gobo Eiffel compatibility
 - `.gitignore` file to exclude build artifacts
-- `build-x64-fts5.bat` for quick manual builds
+- `build-x64-fts5.bat` for quick manual builds with auto-detection of Eiffel runtime
+- `LICENSE` file (MIT License)
+- `COMPILE_FLAGS.md` - Comprehensive documentation of all SQLite compile flags
 - Comprehensive build instructions in README for both EiffelStudio and Gobo Eiffel
 - Documentation of recent changes and version history
+- Auto-detection in Makefile for `ISE_EIFFEL` and `EIFFEL_SQLITE_2025` environment variables
 
 ### Changed
 - Compiled for x64 (64-bit) architecture instead of x86

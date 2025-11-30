@@ -38,22 +38,44 @@ echo    ✓ sqlite3.obj created
 echo.
 echo Step 2: Compiling esqlite.c...
 
-REM Try to find Gobo runtime first
+REM Check for ISE_EIFFEL environment variable first
+if defined ISE_EIFFEL (
+    if exist "%ISE_EIFFEL%\studio\spec\win64\include\eif_eiffel.h" (
+        echo    Using EiffelStudio runtime from ISE_EIFFEL environment variable
+        cl /c /O2 /MT /I"%ISE_EIFFEL%\studio\spec\win64\include" /I. esqlite.c
+        goto :compile_done
+    )
+)
+
+REM Try to find Gobo runtime
 if exist "D:\prod\gobo-gobo-25.09\gobo-gobo-25.09\tool\gec\backend\c\runtime\eif_eiffel.h" (
     echo    Using Gobo Eiffel runtime
     cl /c /O2 /MT /I"D:\prod\gobo-gobo-25.09\gobo-gobo-25.09\tool\gec\backend\c\runtime" /I. esqlite.c
-) else (
-    REM Try EiffelStudio
-    if exist "C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include\eif_eiffel.h" (
-        echo    Using EiffelStudio runtime
-        cl /c /O2 /MT /I"C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include" /I. esqlite.c
-    ) else (
-        echo ERROR: Could not find Eiffel runtime headers!
-        echo Please edit this script to add the correct path.
-        pause
-        exit /b 1
-    )
+    goto :compile_done
 )
+
+REM Try EiffelStudio default installation
+if exist "C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include\eif_eiffel.h" (
+    echo    Using EiffelStudio runtime
+    cl /c /O2 /MT /I"C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include" /I. esqlite.c
+    goto :compile_done
+)
+
+REM If we get here, no runtime was found
+echo ERROR: Could not find Eiffel runtime headers!
+echo.
+echo Searched in:
+echo   - ISE_EIFFEL environment variable
+echo   - D:\prod\gobo-gobo-25.09\gobo-gobo-25.09\tool\gec\backend\c\runtime
+echo   - C:\Program Files\Eiffel Software\EiffelStudio 25.02 Standard\studio\spec\win64\include
+echo.
+echo Please either:
+echo   1. Set ISE_EIFFEL environment variable to your EiffelStudio installation
+echo   2. Edit this script to add your Eiffel runtime path
+pause
+exit /b 1
+
+:compile_done
 
 if %ERRORLEVEL% neq 0 (
     echo ERROR: Failed to compile esqlite.c
