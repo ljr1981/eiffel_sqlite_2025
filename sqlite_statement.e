@@ -399,7 +399,6 @@ feature {SQLITE_STATEMENT} -- Basic operations: Execution
 			l_api: like sqlite_api
 			l_stmt: like internal_stmt
 			l_db: detachable like database
-			l_exception: detachable SQLITE_EXCEPTION
 			l_result: INTEGER
 			l_done: BOOLEAN
 			l_locked: BOOLEAN
@@ -424,11 +423,8 @@ feature {SQLITE_STATEMENT} -- Basic operations: Execution
 						l_arg_index := sqlite3_bind_parameter_index (sqlite_api, internal_stmt, l_arg_id.item)
 						if l_arg_index = 0 and then l_arg_variable[1] = '?' then
 							l_arg_variable := l_arg_variable.substring (2, l_arg_variable.count)
-							if l_arg_variable.is_integer_32 then
+							check is_integer_32: l_arg_variable.is_integer_32 then
 								l_arg_index := l_arg_variable.to_integer_32
-							else
-									-- Contracts in SQLITE_BIND_ARG should make this impossible.
-								check should_never_happen: False end
 							end
 						end
 
@@ -462,6 +458,14 @@ feature {SQLITE_STATEMENT} -- Basic operations: Execution
 			l_locked := True
 
 			l_total_count := l_db.total_changes_count
+
+
+				-- Diagnostic checks before sqlite3_step
+			check db_not_closed: not l_db.is_closed end
+			check stmt_pointer_valid: l_stmt /= default_pointer end
+			check db_handle_valid: l_db.internal_db /= default_pointer end
+			check api_initialized: l_api.is_interface_usable end
+			check statement_connected: is_connected end
 
 			from
 				create l_row.make (Current)
@@ -507,22 +511,19 @@ feature {SQLITE_STATEMENT} -- Basic operations: Execution
 				-- Fetch any error information, if any, and report it.		
 			if not sqlite_success (l_result) then
 				if is_connected then
-					l_exception := l_db.last_exception
+					last_exception := l_db.last_exception
 					if l_locked then
 						l_locked := False
 						l_db.unlock -- (-1) 0
 					end
 				end
-				if not attached l_exception then
+				if not attached last_exception then
 						-- No exception
-					l_exception := sqlite_exception (l_result, Void)
+					last_exception := sqlite_exception (l_result, Void)
 				end
-				last_exception := l_exception
 
 					-- Notify post execute
 				on_after_executed
-
-				l_exception.raise
 			else
 					-- Set the change count
 				internal_changes_count := l_db.total_changes_count - l_total_count
