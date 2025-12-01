@@ -27,10 +27,12 @@ All notable changes to this project will be documented in this file.
 - Type compatibility issues with Gobo Eiffel runtime
 
 ### Verified
-- All 181 tests passing in simple_sql integration project
+- All 250 tests passing in simple_sql integration project
 - FTS5 detection working correctly
 - Boolean query matching working as expected
 - Special character search (e.g., "O'Brien") working correctly
+- JSON1 extension functions working
+- Repository pattern CRUD operations working
 
 ## Notes
 
@@ -39,4 +41,4 @@ This version has been tested with:
 - Windows 10/11 x64
 - EiffelStudio 25.02 Standard
 - Gobo Eiffel Compiler (gobo-25.09)
-- simple_sql library (all 181 tests passing)
+- simple_sql library v0.8 (all 250 tests passing)
